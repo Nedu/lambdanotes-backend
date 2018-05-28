@@ -1,0 +1,27 @@
+{
+  "name": "lambdanotes-backend",
+  "version": "1.0.0",
+  "description": "Backend for lambda notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest --watch --verbose",
+    "start": "nodemon server.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nedu/lambdanotes-backend.git"
+  },
+  "keywords": [],
+  "author": "Nedu Robert <nedumrobert@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nedu/lambdanotes-backend/issues"
+  },
+  "homepage": "https://github.com/Nedu/lambdanotes-backend#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
