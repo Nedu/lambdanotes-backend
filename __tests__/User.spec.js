@@ -1,27 +1,13 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const faker = require('faker');
+const utils = require('../api/config/utils');
 
 const User = require('../api/models/User');
 
 describe('User model', () => {
-    beforeAll(() => {
-        return mongoose
-            .connect('mongodb://localhost/testingdb')
-            .then(console.log('connected to test db'));
-    });
 
-    beforeEach(() => {
-        const { userName, password } = faker.internet;
-        user = { username: userName(), password: password() }
-    });
-
-    afterEach(() => {
-        return User.remove();
-    });
-
-    afterAll(() => {
-        return mongoose.disconnect();
+    it('should fail when env is not testing', () => {
+        expect(process.env.NODE_ENV).toEqual('testing');
     });
 
     it('should hash the password before saving the user to the database', async () => {

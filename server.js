@@ -3,6 +3,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+const env = require('./env');
+
 const server = express();
 const corsOptions = {
   origin: 'https://lambda-notes-app.netlify.com/',
@@ -12,10 +14,10 @@ const corsOptions = {
 // const userRoutes = require('./routes/users');
 // const noteRoutes = require('./routes/notes');
 
-const url = process.env.DATABASE_URL || 'mongodb://localhost/lambdanotesdb';
-mongoose.connect(url)
+const url = env.DATABASE_URL || 'mongodb://localhost/lambdanotesdb';
+mongoose.connect(env.DATABASE_URL)
 .then(mongo => {
-  console.log(`Sucessfully connected to database`)
+  console.log(`Sucessfully connected to database ${process.env.DATABASE_URL}`)
 })
 .catch(err => {
   console.log(`Error connecting to database: ${err}`)

@@ -15,10 +15,10 @@ const User = new mongoose.Schema({
     minlength: 12,
   },
   notes: [
-      {
-          type: ObjectId,
-          ref: 'Note'
-      }
+    {
+      type: ObjectId,
+      ref: 'Note'
+    }
   ]
 }, { timestamps: true });
 

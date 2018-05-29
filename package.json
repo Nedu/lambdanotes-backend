@@ -4,7 +4,7 @@
   "description": "Backend for lambda notes",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --watch --verbose",
+    "test": "cross-env NODE_ENV=testing jest --watch --verbose",
     "start": "nodemon server.js"
   },
   "jest": {
