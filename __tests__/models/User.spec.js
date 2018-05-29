@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const utils = require('../api/config/utils');
+const utils = require('../../api/config/utils');
 
-const User = require('../api/models/User');
+const User = require('../../api/models/User');
 
 describe('User model', () => {
 
