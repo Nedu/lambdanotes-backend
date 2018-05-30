@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const Note = new mongoose.Schema({
     author: {
         type: ObjectId,
-        ref: User,
+        ref: 'User',
         required: true
     },
     title: {
@@ -15,9 +15,7 @@ const Note = new mongoose.Schema({
         type: String,
         required: true,
     },
-    tags: {
-        type: Array
-    }
+    tags: [String]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Note', Note);
