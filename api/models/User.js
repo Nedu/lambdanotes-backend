@@ -22,17 +22,16 @@ const User = new mongoose.Schema({
   ]
 }, { timestamps: true });
 
-User.pre('save', function(next) {
-  bcrypt.hash(this.password, 12)
-  .then(hash => {
-    this.password = hash;
-    next();
-  })
-  .catch(err => { next(err) });
+User.pre('save', async function(next) {
+  this.password = await bcrypt.hash(this.password, 12);
+
+  next();
 });
 
-User.methods.validatePassword = function(password) {
-  return bcrypt.compare(password, this.password);
+User.methods.validatePassword = async function(password) {
+  return await bcrypt.compare(password, this.password).catch(err => {
+    console.log(err.message);
+  });
 };
 
 module.exports = mongoose.model('User', User);
