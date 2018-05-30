@@ -44,4 +44,20 @@ describe('User model', () => {
         }
         expect(invalid).toThrow();
     })
+
+    it('should validate password before retrieving', async () => {
+        const testUser = { username: 'Nedu', password: 'a very long password' };
+        const testUser2 = { username: 'Nedu', password: '' };        
+        const newUser = await User.create(testUser);
+        
+        const retrievedUser = await User.findOne({ username: testUser.username });
+        const retrievedUser2 = await User.findOne({ username: testUser2.username });
+        
+        const isValid = await retrievedUser.validatePassword(testUser.password);
+        const isValid2 = await retrievedUser2.validatePassword(testUser2.password);
+        
+        expect(isValid).toBe(true);
+        expect(isValid2).toBe(false);        
+    })
+
 });
