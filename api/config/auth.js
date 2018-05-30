@@ -62,7 +62,7 @@ passport.use(jwtStrategy);
 // passport local middleware
 const passportOptions = { session: false };
 const authenticate = passport.authenticate('local', passportOptions);
-const protected = passport.authenticate('jwt', passportOptions);
+const restricted = passport.authenticate('jwt', passportOptions);
 
 function makeToken(user) {
   const timestamp = new Date().getTime();
@@ -78,4 +78,4 @@ function makeToken(user) {
   return jwt.sign(payload, secret, options);
 }
 
-module.exports = { authenticate, protected, makeToken}
+module.exports = { authenticate, restricted, makeToken}
