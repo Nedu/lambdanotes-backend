@@ -14,10 +14,13 @@ let userData = {
 let testToken;
 let env;
 
-if (process.env.NODE_ENV !== 'production') {
-    env = require(path.join(__dirname, '../../env'));
+if (
+  process.env.NODE_ENV !== 'production' ||
+  process.env.NODE_ENV !== 'testing'
+) {
+  env = require(path.join(__dirname, '../../env'));
 } else {
-    env = process.env;
+  env = process.env;
 }
 
 describe('User API', () => {
