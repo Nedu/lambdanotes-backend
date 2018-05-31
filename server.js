@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 if(process.env.NODE_ENV !== 'production') {
-  const env = require(path.join(__dirname, './env'));
+  // const env = require(path.join(`(__dirname), './env'`));
+  const env = require('./env');
 } else {
   const env = process.env;
 }
