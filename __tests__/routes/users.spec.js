@@ -15,7 +15,7 @@ let testToken;
 let env;
 
 if (
-  process.env.NODE_ENV !== 'production' ||
+  process.env.NODE_ENV !== 'production' &&
   process.env.NODE_ENV !== 'testing'
 ) {
   env = require(path.join(__dirname, '../../env'));

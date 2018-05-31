@@ -5,7 +5,7 @@ const faker = require('faker');
 const User = require('../models/User');
 
 let env;
-if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'testing') {
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
     env = require(path.join(__dirname, '../../env'));
 } else {
     env = process.env;
