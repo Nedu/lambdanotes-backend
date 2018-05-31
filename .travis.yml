@@ -9,6 +9,7 @@ cache:
   yarn: true
 services:
 - mongodb
+after_success:
 deploy:
   provider: heroku
   api_key:
