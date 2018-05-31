@@ -4,7 +4,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const env = require(path.join(__dirname, './env'));
+if(process.env.NODE_ENV !== 'production') {
+  const env = require(path.join(__dirname, './env'));
+} else {
+  const env = process.env;
+}
 
 const server = express();
 const corsOptions = {
