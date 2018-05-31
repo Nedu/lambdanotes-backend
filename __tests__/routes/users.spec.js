@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const faker = require('faker');
 const path = require('path');
-const env = require(path.join(__dirname, '../../env'));
+
+if (process.env.NODE_ENV !== 'production') {
+    const env = require(path.join(__dirname, '../../env'));
+} else {
+    const env = process.env;
+}
 
 const User = require('../../api/models/User');
 const server = require('../../server')
