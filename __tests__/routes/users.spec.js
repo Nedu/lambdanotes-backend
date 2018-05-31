@@ -3,12 +3,6 @@ const request = require('supertest');
 const faker = require('faker');
 const path = require('path');
 
-if (process.env.NODE_ENV !== 'production') {
-    const env = require(path.join(__dirname, '../../env'));
-} else {
-    const env = process.env;
-}
-
 const User = require('../../api/models/User');
 const server = require('../../server')
 const { userName, password } = faker.internet;
@@ -18,6 +12,13 @@ let userData = {
     password: password()
 }
 let testToken;
+let env;
+
+if (process.env.NODE_ENV !== 'production') {
+    env = require(path.join(__dirname, '../../env'));
+} else {
+    env = process.env;
+}
 
 describe('User API', () => {
     beforeAll(() => {

@@ -7,8 +7,7 @@ const path = require('path');
 let env;
 
 if(process.env.NODE_ENV !== 'production') {
-  // const env = require(path.join(`(__dirname), './env'`));
-  env = require('../../env');
+  env = require(path.join(__dirname, '../../env'));
 } else {
   env = process.env;
 }

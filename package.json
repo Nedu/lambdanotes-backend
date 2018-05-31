@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "cross-env NODE_ENV=testing jest --watch --verbose",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "jest": {
     "testEnvironment": "node"

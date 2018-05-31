@@ -6,8 +6,7 @@ const path = require('path');
 let env;
 
 if(process.env.NODE_ENV !== 'production') {
-  // const env = require(path.join(`(__dirname), './env'`));
-  env = require('./env');
+  env = require(path.join(__dirname, './env'));
 } else {
   env = process.env;
 }
@@ -21,7 +20,6 @@ const corsOptions = {
 const userRoutes = require('./api/routes/users');
 const noteRoutes = require('./api/routes/notes');
 
-const url = env.DATABASE_URL || 'mongodb://localhost/lambdanotesdb';
 mongoose.connect(env.DATABASE_URL)
 .then(mongo => {
   console.log(`Sucessfully connected to database ${env.DATABASE_URL}`)
