@@ -13,7 +13,8 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing')
 
 const server = express();
 const corsOptions = {
-  origin: 'https://lambda-notes-app.netlify.com/',
+  // origin: 'https://lambda-notes-app.netlify.com/',
+  origin: '*',
   credentials: true,
 };
 
