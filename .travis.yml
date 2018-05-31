@@ -1,11 +1,15 @@
 language: node_js
 node_js:
- - "8.9.0"
+- 8.9.0
 sudo: false
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.6.0
-  - export PATH=$HOME/.yarn/bin:$PATH
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.6.0
+- export PATH=$HOME/.yarn/bin:$PATH
 cache:
   yarn: true
 services:
-  - mongodb
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: xv2+AIxViL9pWNNimer3fEiU13WywbynExzWb1mEvqrarFvCwXkNiF8Yad2wQosmAKxb/u02XjAXYJfBx5sFFTsHi1f6BjUpz8M4VwjttvE5dSqQXC9DzZ4atYBG6HzK2aIOGE5/i7CcBGhRlSA+W8k75UCA3bl2IKpksW/U7dzHb7tG0LIO3s2H6NDGGS0kdVJq52q+kfJ3AOrAvpotW5prZ0P7rJr8xsXpkPUfhN2cOobZls2mAch0jJGoLmOeRQ3VlMfp5TCG8E5FTNEsJX8Kfr2GD0BYNQULEFIYe+tCFf6szPq8LB1cTGFwLkEqW+nPg5oI2mXl3XrtZEx3ekU1R6Ii5ffj25RgJSSNkpwGxAExDvfskBe4MSO7Ix0LRiuPVMoHpmvQltEG9I0cyXyfa3x+/Bx8pv4aQOeJkHM7d1CoHOvE/ilb3MR0+Ccs4vfguyHJ9b1Q4XIyJpbqKQy06coFAED2/aF6/ZYqYxEWptBWkY5qMz1zVNchUz0Wm2KjxpHufBl5fEA/1w8p30q0ys1FgIFycWAL9Gvb0iPaGMAM6ETuQlckO8jlwZHFlj29ZKI8PTAZpX1O3BEyV2Tfj/o1kuyfbm0EBjflLm77q5EmZZkvyY5MJ2qZEC/GvnM7AlhK1ifCXGIqsc5hbn/mfbc3tTjtEzbMkCCxr5c=
