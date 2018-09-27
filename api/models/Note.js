@@ -15,7 +15,11 @@ const Note = new mongoose.Schema({
         type: String,
         required: true,
     },
-    tags: [String]
+    tags: [String],
+    collaborators: [{
+        type: ObjectId,
+        ref: 'User'
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Note', Note);
