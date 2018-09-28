@@ -15,7 +15,7 @@ const testId = require('mongoose').Types.ObjectId();
 let testToken;
 let env;
 
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+if (process.env.NODE_ENV !== 'production') {
     env = require(path.join(__dirname, '../../env'));
 } else {
     env = process.env;
@@ -44,12 +44,22 @@ describe('Notes API', () => {
     });
 
     describe('[GET] /api/v1/notes', () => {
+        it('should deny access to requests with a missing or invalid token', async () => {
+            const missingResponse = await request(server).get(`/api/v1/notes`);
+            const invalidResponse = await request(server).get(`/api/v1/notes`).set('Authorization', 'token');
+
+            expect(missingResponse.status).toBe(400);
+            expect(invalidResponse.type).toBe(404);
+        });
+    })
+
+    describe('[GET] /api/v1/notes', () => {
         it('should retrieve all notes with a valid token', async () => {
             const response = await request(server).get(`/api/v1/notes`).set('Authorization', 'Bearer ' + testToken);
 
             expect(response.status).toEqual(200);
             expect(response.type).toEqual('application/json');
-            expect(response.body[0]).toHaveProperty('_id');
+            expect(response.body.notes).toHaveLength(5); 
         });
     })
 
