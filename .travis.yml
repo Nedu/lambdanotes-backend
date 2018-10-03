@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - 8.9.0
 script:
-  - "yarn test"
+  - "yarn test --forceExit"
 sudo: false
 before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.6.0

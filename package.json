@@ -9,7 +9,7 @@
     "yarn": ">=1.6.0"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose",
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand --detectOpenHandles",
     "start": "nodemon server.js"
   },
   "jest": {

@@ -32,6 +32,7 @@ afterEach(() => {
     return User.remove();
 });
 
-afterAll(() => {
-    return mongoose.disconnect();
+afterAll(async () => {
+    await User.remove()
+    await mongoose.disconnect()
 });
