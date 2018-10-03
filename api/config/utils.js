@@ -3,13 +3,12 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 
 const User = require('../models/User');
-//  || process.env.NODE_ENV !== 'testing'
-let env;
-if (process.env.NODE_ENV !== 'production') {
-    env = require(path.join(__dirname, '../../env'));
-} else {
-    env = process.env;
-}
+const env = require(path.join(__dirname, '../../env')) || process.env;
+// if (process.env.NODE_ENV !== 'production') {
+//     env = require(path.join(__dirname, '../../env'));
+// } else {
+//     env = process.env;
+// }
 
 beforeAll(() => {
     return mongoose.connect(env.DATABASE_URL)
