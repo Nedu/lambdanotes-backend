@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const faker = require('faker');
 const path = require('path');
+const fs = require('fs');
 
 const notes = require('../../api/controllers/notes');
 const Note = require('../../api/models/Note');
@@ -15,21 +16,32 @@ const testId = require('mongoose').Types.ObjectId();
 let testToken;
 let env;
 
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+if (fs.existsSync(path.join(__dirname, '../../env'))) {
     env = require(path.join(__dirname, '../../env'));
-} else {
+  } else {
     env = process.env;
 }
 
+// if (process.env.NODE_ENV !== 'production') {
+//     env = require(path.join(__dirname, '../../env'));
+// } else {
+//     env = process.env;
+// }
+
 describe('Notes API', () => {
+    let notesData, currentUser;
     beforeAll(() => {
-        const notesData = [];
-        for (let i = 0; i < 5; i++) {
-            notesData.push({ author: testId.toJSON(), title: words(), content: sentences(), tags: [word()] })
-        }
+        notesData = [];
+        
         return mongoose.connect(env.DATABASE_URL)
         .then(() => User.create({ username: userName(), password: password() })
-        .then(user => testToken = makeToken(user)))
+        .then(user => {
+            currentUser = user;
+            testToken = makeToken(user);
+            for (let i = 0; i < 5; i++) {
+                notesData.push({ author: currentUser._id.toString(), title: words(), content: sentences(), tags: [word()], collaborators: [] })
+            }
+        }))
         .then(() => Note.insertMany(notesData))
     });
 
@@ -44,18 +56,29 @@ describe('Notes API', () => {
     });
 
     describe('[GET] /api/v1/notes', () => {
+        it('should deny access to requests with a missing or invalid token', async () => {
+            const missingResponse = await request(server).get(`/api/v1/notes`);
+            const invalidResponse = await request(server).get(`/api/v1/notes`).set('Authorization', 'token');
+
+            expect(missingResponse.status).toBe(401);
+            expect(invalidResponse.status).toBe(401);
+        });
+    })
+
+    describe('[GET] /api/v1/notes', () => {
         it('should retrieve all notes with a valid token', async () => {
-            const response = await request(server).get(`/api/v1/notes`).set('Authorization', 'Bearer ' + testToken);
+            const response = await request(server).get(`/api/v1/notes/`).set('Authorization', 'Bearer ' + testToken);
 
             expect(response.status).toEqual(200);
             expect(response.type).toEqual('application/json');
-            expect(response.body[0]).toHaveProperty('_id');
+            expect(response.body).toMatchObject(notesData); 
+            expect(response.body).toHaveLength(5); 
         });
     })
 
     describe('[GET] /api/v1/notes/:id', () => {
         it('should retrieve a single note with a valid id and token', async () => {
-            const note =  { author: testId.toJSON(), title: words(), content: sentences(), tags: [word()] };
+            const note =  { author: currentUser._id.toString(), title: words(), content: sentences(), tags: [word()] };
             const newNote = await Note.create(note);
             const response = await request(server).get(`/api/v1/notes/${newNote._id}`).set('Authorization', 'Bearer ' + testToken);
 
@@ -73,7 +96,7 @@ describe('Notes API', () => {
 
     describe('[POST] /api/v1/notes', () => {
         it('should create a new note with a valid token', async () => {
-            const note = { author: testId.toJSON(), title: words(), content: sentences(), tags: [word()] };
+            const note = { author: currentUser._id.toString(), title: words(), content: sentences(), tags: [word()] };
             const response = await request(server)
             .post(`/api/v1/notes`)
             .send(note)
@@ -92,13 +115,14 @@ describe('Notes API', () => {
 
     describe('[PUT] /api/v1/notes/:id', () => {
         it('should update an existing note with a valid id and token', async () => {
-            const note = { author: testId.toJSON(), title: words(), content: sentences(), tags: [word()] };
+            const note = { author: currentUser._id.toString(), title: words(), content: sentences(), tags: [word()] };
             const newNote = await Note.create(note);
             const updatedNote = { title: words(), content: sentences() };
             const response = await request(server)
-                .put(`/api/v1/notes/${newNote._id}`)
+                .put(`/api/v1/notes/${newNote._id}/`)
+                .set('Accept', 'application/json')
+                .set('Authorization', 'Bearer ' + testToken)
                 .send(updatedNote)
-                .set('Authorization', 'Bearer ' + testToken);
 
             expect(response.status).toEqual(200);
             expect(response.type).toEqual('application/json');
@@ -110,7 +134,7 @@ describe('Notes API', () => {
 
     describe('[DELETE] /api/v1/notes/:id', () => {
         it('should delete an existing note with a valid id and token', async () => {
-            const note = { author: testId.toJSON(), title: words(), content: sentences(), tags: [word()] };
+            const note = { author: currentUser._id.toString(), title: words(), content: sentences(), tags: [word()] };
             const newNote = await Note.create(note);
             const response = await request(server).delete(`/api/v1/notes/${newNote._id}`).set('Authorization', 'Bearer ' + testToken);;
             

@@ -3,13 +3,20 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 let env;
 
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+if (fs.existsSync(path.join(__dirname, './env'))) {
   env = require(path.join(__dirname, './env'));
 } else {
   env = process.env;
 }
+
+// if (process.env.NODE_ENV !== 'production') {
+//   env = require(path.join(__dirname, './env'));
+// } else {
+//   env = process.env;
+// }
 
 const server = express();
 const corsOptions = {

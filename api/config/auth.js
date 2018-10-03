@@ -4,13 +4,20 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const path = require('path');
+const fs = require('fs');
 let env;
 
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+if (fs.existsSync(path.join(__dirname, '../../env'))) {
   env = require(path.join(__dirname, '../../env'));
 } else {
   env = process.env;
 }
+
+// if (process.env.NODE_ENV !== 'production') {
+//   env = require(path.join(__dirname, '../../env'));
+// } else {
+//   env = process.env;
+// }
 
 const User = require('../models/User');
 const secret = env.SECRET;
@@ -48,6 +55,7 @@ const jwtOptions = {
 // A passport strategy for securing RESTful endpoinds using JWT
 const jwtStrategy = new JwtStrategy(jwtOptions, function(payload, done) {
   User.findById(payload.sub)
+    .select('-password')
     .then(user => {
       if (user) {
         done(null, user);
@@ -56,7 +64,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, function(payload, done) {
       }
     })
     .catch(err => {
-      done(err);
+      done(err, false);
     });
 });
 

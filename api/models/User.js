@@ -13,13 +13,13 @@ const User = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 12,
-  },
-  notes: [
-    {
-      type: ObjectId,
-      ref: 'Note'
-    }
-  ]
+  }
+  // notes: [
+  //   {
+  //     type: ObjectId,
+  //     ref: 'Note'
+  //   }
+  // ]
 }, { timestamps: true });
 
 User.pre('save', async function(next) {
