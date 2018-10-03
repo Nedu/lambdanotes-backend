@@ -4,7 +4,13 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const path = require('path');
-const env = require(path.join(__dirname, '../../env')) || process.env;
+let env;
+
+if (require(path.join(__dirname, '../../env'))) {
+  env = require(path.join(__dirname, '../../env'));
+} else {
+  env = process.env;
+}
 
 // if (process.env.NODE_ENV !== 'production') {
 //   env = require(path.join(__dirname, '../../env'));
