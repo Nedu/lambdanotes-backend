@@ -1,16 +1,16 @@
 const User = require('../models/User');
 const { makeToken } = require('../config/auth');
 
-// Retrieve all existing users
-exports.findAll = (req, res) => {
-    User.find().populate('notes').select('-password -__v')
-    .then(users => {
-      res.status(200).json(users);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-};
+// // Retrieve all existing users
+// exports.findAll = (req, res) => {
+//     User.find().populate('notes').select('-password -__v')
+//     .then(users => {
+//       res.status(200).json(users);
+//     })
+//     .catch(err => {
+//       res.status(500).json(err);
+//     });
+// };
 
 // Register
 exports.register = (req, res) => {

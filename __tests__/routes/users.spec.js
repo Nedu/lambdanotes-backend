@@ -82,14 +82,14 @@ describe('User API', () => {
 
     });
 
-    describe('[GET] /api/v1/users', () => {
-        it('should retrieve a list of all users if the authorization token is valid', async () => {
-            const response = await request(server).get('/api/v1/users').set('Authorization', `Bearer ${testToken}`);
-            const { status, type, body } = response;
+    // describe('[GET] /api/v1/users', () => {
+    //     it('should retrieve a list of all users if the authorization token is valid', async () => {
+    //         const response = await request(server).get('/api/v1/users').set('Authorization', `Bearer ${testToken}`);
+    //         const { status, type, body } = response;
             
-            expect(status).toEqual(200);
-            expect(type).toEqual('application/json');
-        }, 30000);
+    //         expect(status).toEqual(200);
+    //         expect(type).toEqual('application/json');
+    //     }, 30000); 
 
-    })
+    // })
 });
