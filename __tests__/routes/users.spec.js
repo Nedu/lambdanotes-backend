@@ -3,6 +3,7 @@ const request = require('supertest');
 const faker = require('faker');
 const { userName, password } = faker.internet;
 const path = require('path');
+const fs = require('fs');
 
 const User = require('../../api/models/User');
 const server = require('../../server')
@@ -14,11 +15,11 @@ let userData = {
 let testToken;
 let env;
 
-if (require(path.join(__dirname, '../../env'))) {
+if (fs.existsSync(path.join(__dirname, '../../env'))) {
     env = require(path.join(__dirname, '../../env'));
   } else {
     env = process.env;
-  }
+}
 
 // if (
 //   process.env.NODE_ENV !== 'production') {

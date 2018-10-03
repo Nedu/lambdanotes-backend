@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const faker = require('faker');
 const path = require('path');
+const fs = require('fs');
 
 const notes = require('../../api/controllers/notes');
 const Note = require('../../api/models/Note');
@@ -15,11 +16,11 @@ const testId = require('mongoose').Types.ObjectId();
 let testToken;
 let env;
 
-if (require(path.join(__dirname, '../../env'))) {
+if (fs.existsSync(path.join(__dirname, '../../env'))) {
     env = require(path.join(__dirname, '../../env'));
   } else {
     env = process.env;
-  }
+}
 
 // if (process.env.NODE_ENV !== 'production') {
 //     env = require(path.join(__dirname, '../../env'));

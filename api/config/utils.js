@@ -1,13 +1,14 @@
 const path = require('path');
 const mongoose = require('mongoose');
 const faker = require('faker');
+const fs = require('fs');
 
 const User = require('../models/User');
 let env;
 
-if (require(path.join(__dirname, '../../env'))) {
+if (fs.existsSync(path.join(__dirname, '../../env'))) {
     env = require(path.join(__dirname, '../../env'));
-    } else {
+  } else {
     env = process.env;
 }
 
