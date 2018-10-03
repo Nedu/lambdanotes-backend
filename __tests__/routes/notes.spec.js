@@ -13,13 +13,13 @@ const { userName, password } = faker.internet;
 const { words, sentences, word } = faker.lorem;
 const testId = require('mongoose').Types.ObjectId();
 let testToken;
-let env;
+const env = require(path.join(__dirname, '../../env')) || process.env;
 
-if (process.env.NODE_ENV !== 'production') {
-    env = require(path.join(__dirname, '../../env'));
-} else {
-    env = process.env;
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     env = require(path.join(__dirname, '../../env'));
+// } else {
+//     env = process.env;
+// }
 
 describe('Notes API', () => {
     beforeAll(() => {
