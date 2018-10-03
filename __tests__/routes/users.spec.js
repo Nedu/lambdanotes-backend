@@ -36,6 +36,7 @@ describe('User API', () => {
     afterAll(() => {
         return User.remove()
         .then(() => mongoose.disconnect())
+        .then(() => server.close())
     });
 
     it('should fail when env is not testing', () => {

@@ -33,5 +33,6 @@ afterEach(() => {
 });
 
 afterAll(() => {
-    return mongoose.disconnect();
+    return mongoose.disconnect()
+    .then(() => server.close());
 });
