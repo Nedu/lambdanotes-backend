@@ -3,7 +3,14 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 
 const User = require('../models/User');
-const env = require(path.join(__dirname, '../../env')) || process.env;
+let env;
+
+if (require(path.join(__dirname, '../../env'))) {
+    env = require(path.join(__dirname, '../../env'));
+    } else {
+    env = process.env;
+}
+
 // if (process.env.NODE_ENV !== 'production') {
 //     env = require(path.join(__dirname, '../../env'));
 // } else {
