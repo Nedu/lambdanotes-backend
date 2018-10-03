@@ -3,9 +3,10 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 let env;
 
-if (require(path.join(__dirname, './env'))) {
+if (fs.existsSync(path.join(__dirname, './env'))) {
   env = require(path.join(__dirname, './env'));
 } else {
   env = process.env;
