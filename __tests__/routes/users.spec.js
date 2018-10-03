@@ -33,10 +33,9 @@ describe('User API', () => {
         return mongoose.connect(env.DATABASE_URL).then(() => User.remove({}));
     });
 
-    afterAll(() => {
-        return User.remove()
-        .then(() => mongoose.disconnect())
-        .then(() => server.close())
+    afterAll(async () => {
+        await User.remove()
+        await mongoose.disconnect()
     });
 
     it('should fail when env is not testing', () => {
