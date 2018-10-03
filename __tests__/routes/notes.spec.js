@@ -46,10 +46,9 @@ describe('Notes API', () => {
     });
 
 
-    afterAll(() => {
-        return Note.remove()
-        .then(() => mongoose.disconnect())
-        .then(() => server.close())
+    afterAll(async () => {
+        await Note.remove()
+        await mongoose.disconnect()
     });
 
     it('should fail when env is not testing', () => {
