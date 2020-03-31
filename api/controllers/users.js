@@ -17,7 +17,7 @@ exports.register = (req, res) => {
     const { username, password } = req.body;
     User.findOne({ username }).then(existingUser => {
         if(existingUser) {
-            return res.status(409).json({ message: 'problem signing up'});
+            return res.status(409).json({ message: 'problem signing up', code: 'USEREXISTS' });
         } else {
             const user = new User({ username, password });
             user.save().then(user => {
